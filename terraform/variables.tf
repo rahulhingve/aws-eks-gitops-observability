@@ -25,7 +25,7 @@ variable "vpc_cider" {
 variable "node_instance_type" {
     description = "EC2 Instance type for worker nodes "
     type = string
-    default = "t2.small"
+    default = "t3.small"
 }
 
 variable "node_desired_count" {
