@@ -16,7 +16,7 @@ variable "cluster_version" {
     default = "1.30"
 }
 
-variable "vpc_cider" {
+variable "vpc_cidr" {
     description = "VPC CIDR Block"
     type = string
     default = "10.0.0.0/16"
