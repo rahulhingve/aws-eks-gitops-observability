@@ -1,16 +1,16 @@
 output "cluster_name" {
-    value = aws_eks_cluster.main.name
-  
+  value = aws_eks_cluster.main.name
+
 }
 
 output "cluster_endpoint" {
-    value = aws_eks_cluster.main.endpoint
+  value = aws_eks_cluster.main.endpoint
 }
 
 output "cluster_version" {
-    value = aws_eks_cluster.main.version
+  value = aws_eks_cluster.main.version
 }
 
 output "region" {
-    value = var.aws_region
+  value = var.aws_region
 }
