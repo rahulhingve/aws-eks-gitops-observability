@@ -1,10 +1,10 @@
 const express = require('express');
 const promClient = require('prom-client');
 const os = require('os');
-const { timeStamp, error } = require('console');
+
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.json({
         message: "hello from aws eks demo app",
-        version: "1.0.0",
+        version: process.env.APP_VERSION || "1.0.0",
         hostname: os.hostname(),
 
 
@@ -78,6 +78,6 @@ app.use((req, res) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`App is Running on Port ${port}`)
+app.listen(PORT, () => {
+    console.log(`App is Running on Port ${PORT}`)
 });
