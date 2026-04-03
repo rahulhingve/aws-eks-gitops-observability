@@ -1,0 +1,49 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: apps
+rules:
+  - apiGroups: ["", "apps", "autoscaling"]
+    resources:
+      [
+        "pods",
+        "deployments",
+        "services",
+        "replicasets",
+        "horizontalpodautoscalers",
+      ]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["pods/log", "pods/exec"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: monitoring-viewer
+  namespace: monitoring
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "endpoints", "configmaps"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-service-account
+  namespace: apps
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-binding
+  namespace: apps
+subjects:
+  - kind: ServiceAccount
+    name: app-service-account
+    namespace: apps
+roleRef:
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+  name: developer
