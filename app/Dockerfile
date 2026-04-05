@@ -18,7 +18,7 @@ WORKDIR /app
 # Create non-root user for security
 
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -u 1001 -S nodeuser -u 1001 -G nodejs
+    adduser -u 1001 -S nodeuser -G nodejs
 
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --chown=nodeuser:nodejs . .
