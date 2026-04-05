@@ -30,15 +30,15 @@ variable "node_instance_type" {
 
 variable "node_desired_count" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "node_min_count" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "node_max_count" {
   type    = number
-  default = 1
+  default = 2
 }
