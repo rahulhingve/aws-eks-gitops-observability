@@ -1,6 +1,7 @@
 # Terraform
 .terraform/
 .terraform.lock.hcl
+**/.terraform.tfstate.lock.info
 *.tfstate
 *.tfstate.backup
 *.tfvars
@@ -56,8 +57,11 @@ Thumbs.db
 # Kubernetes / Helm
 **/kubeconfig
 **/kubectl-*
-**/helm-*
 
+# Helm packaged charts / local values
+helm-charts/**/*.tgz
+helm-charts/**/values*.local.yaml
+helm-charts/**/secrets*.yaml
 # ArgoCD / Temporary files
 **/argocd-*
 **/*.yaml.bak
