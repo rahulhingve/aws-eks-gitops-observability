@@ -1,0 +1,29 @@
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ helm get manifest demo-app -n apps | grep -A 20 HorizontalPodAutoscaler
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ helm get manifest demo-app -n apps | grep -A 20 HorizontalPodAutoscaler
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ helm template demo-app helm-charts/app/ --namespace apps | grep -A 20 HorizontalPodAutoscaler
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ helm upgrade --install demo-app helm-charts/app/ --namespace apps
+Release "demo-app" has been upgraded. Happy Helming!
+NAME: demo-app
+LAST DEPLOYED: Sat Apr  4 15:40:48 2026
+NAMESPACE: apps
+STATUS: deployed
+REVISION: 2
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ kubectl get hpa -n apps
+NAME           REFERENCE             TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+demo-app-hpa   Deployment/demo-app   cpu: <unknown>/70%   1         2         0          13s
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$
+
+silly this is that in values.yamls i made a typo autoscalling that double ll now it was fixed

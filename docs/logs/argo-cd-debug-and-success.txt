@@ -1,0 +1,267 @@
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ helm upgrade --install argocd argo/argo-cd \
+  --namespace argocd \
+  --create-namespace \
+  --wait \
+  --timeout 10m
+Release "argocd" does not exist. Installing it now.
+Release argocd has been cancelled.
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ ^C
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ ^C
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ helm list -n argocd
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+argocd  argocd          1               2026-04-05 15:14:10.9974852 +0530 IST   pending-install argo-cd-9.4.17  v3.3.6
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ kubectl describe pod argocd-application-controller-0 -n argocd
+Name:             argocd-application-controller-0
+Namespace:        argocd
+Priority:         0
+Service Account:  argocd-application-controller
+Node:             <none>
+Labels:           app.kubernetes.io/component=application-controller
+                  app.kubernetes.io/instance=argocd
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=argocd-application-controller
+                  app.kubernetes.io/part-of=argocd
+                  app.kubernetes.io/version=v3.3.6
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=argocd-application-controller-ff857d975
+                  helm.sh/chart=argo-cd-9.4.17
+                  statefulset.kubernetes.io/pod-name=argocd-application-controller-0
+Annotations:      checksum/cm: cc47715567cec6a9ccac0d09b735b19519d09330ee4bc42d527374c08dc3082b
+                  checksum/cmd-params: 79b179357182c02431043ecb8ae1ad1c1492d33d354f190d3ee9692ab8111963
+Status:           Pending
+IP:
+IPs:              <none>
+Controlled By:    StatefulSet/argocd-application-controller
+Containers:
+  application-controller:
+    Image:           quay.io/argoproj/argocd:v3.3.6
+    Port:            8082/TCP (metrics)
+    Host Port:       0/TCP (metrics)
+    SeccompProfile:  RuntimeDefault
+    Args:
+      /usr/local/bin/argocd-application-controller
+      --metrics-port=8082
+    Readiness:  http-get http://:metrics/healthz delay=10s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      ARGOCD_CONTROLLER_REPLICAS:                                        1
+      ARGOCD_APPLICATION_CONTROLLER_NAME:                                argocd-application-controller
+      ARGOCD_RECONCILIATION_TIMEOUT:                                     <set to the key 'timeout.reconciliation' of config map 'argocd-cm'>                                          Optional: true
+      ARGOCD_HARD_RECONCILIATION_TIMEOUT:                                <set to the key 'timeout.hard.reconciliation' of config map 'argocd-cm'>                                     Optional: true
+      ARGOCD_RECONCILIATION_JITTER:                                      <set to the key 'timeout.reconciliation.jitter' of config map 'argocd-cm'>                                   Optional: true
+      ARGOCD_REPO_ERROR_GRACE_PERIOD_SECONDS:                            <set to the key 'controller.repo.error.grace.period.seconds' of config map 'argocd-cmd-params-cm'>           Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER:                         <set to the key 'repo.server' of config map 'argocd-cmd-params-cm'>                                          Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_TIMEOUT_SECONDS:         <set to the key 'controller.repo.server.timeout.seconds' of config map 'argocd-cmd-params-cm'>               Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_STATUS_PROCESSORS:                   <set to the key 'controller.status.processors' of config map 'argocd-cmd-params-cm'>                         Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_OPERATION_PROCESSORS:                <set to the key 'controller.operation.processors' of config map 'argocd-cmd-params-cm'>                      Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_LOGFORMAT:                           <set to the key 'controller.log.format' of config map 'argocd-cmd-params-cm'>                                Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_LOGLEVEL:                            <set to the key 'controller.log.level' of config map 'argocd-cmd-params-cm'>                                 Optional: true
+      ARGOCD_LOG_FORMAT_TIMESTAMP:                                       <set to the key 'log.format.timestamp' of config map 'argocd-cmd-params-cm'>                                 Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_METRICS_CACHE_EXPIRATION:            <set to the key 'controller.metrics.cache.expiration' of config map 'argocd-cmd-params-cm'>                  Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_TIMEOUT_SECONDS:           <set to the key 'controller.self.heal.timeout.seconds' of config map 'argocd-cmd-params-cm'>                 Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_TIMEOUT_SECONDS:   <set to the key 'controller.self.heal.backoff.timeout.seconds' of config map 'argocd-cmd-params-cm'>         Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_FACTOR:            <set to the key 'controller.self.heal.backoff.factor' of config map 'argocd-cmd-params-cm'>                  Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_CAP_SECONDS:       <set to the key 'controller.self.heal.backoff.cap.seconds' of config map 'argocd-cmd-params-cm'>             Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_BACKOFF_COOLDOWN_SECONDS:  <set to the key 'controller.self.heal.backoff.cooldown.seconds' of config map 'argocd-cmd-params-cm'>        Optional: true
+      ARGOCD_SYNC_WAVE_DELAY:                                            <set to the key 'controller.sync.wave.delay.seconds' of config map 'argocd-cmd-params-cm'>                   Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SYNC_TIMEOUT:                        <set to the key 'controller.sync.timeout.seconds' of config map 'argocd-cmd-params-cm'>                      Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_PLAINTEXT:               <set to the key 'controller.repo.server.plaintext' of config map 'argocd-cmd-params-cm'>                     Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_STRICT_TLS:              <set to the key 'controller.repo.server.strict.tls' of config map 'argocd-cmd-params-cm'>                    Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_PERSIST_RESOURCE_HEALTH:             <set to the key 'controller.resource.health.persist' of config map 'argocd-cmd-params-cm'>                   Optional: true
+      ARGOCD_APP_STATE_CACHE_EXPIRATION:                                 <set to the key 'controller.app.state.cache.expiration' of config map 'argocd-cmd-params-cm'>                Optional: true
+      REDIS_SERVER:                                                      <set to the key 'redis.server' of config map 'argocd-cmd-params-cm'>                                         Optional: true
+      REDIS_COMPRESSION:                                                 <set to the key 'redis.compression' of config map 'argocd-cmd-params-cm'>                                    Optional: true
+      REDISDB:                                                           <set to the key 'redis.db' of config map 'argocd-cmd-params-cm'>                                             Optional: true
+      REDIS_USERNAME:                                                    <set to the key 'redis-username' in secret 'argocd-redis'>                                                   Optional: true
+      REDIS_PASSWORD:                                                    <set to the key 'auth' in secret 'argocd-redis'>                                                             Optional: false
+      REDIS_SENTINEL_USERNAME:                                           <set to the key 'redis-sentinel-username' in secret 'argocd-redis'>                                          Optional: true
+      REDIS_SENTINEL_PASSWORD:                                           <set to the key 'redis-sentinel-password' in secret 'argocd-redis'>                                          Optional: true
+      ARGOCD_DEFAULT_CACHE_EXPIRATION:                                   <set to the key 'controller.default.cache.expiration' of config map 'argocd-cmd-params-cm'>                  Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_OTLP_ADDRESS:                        <set to the key 'otlp.address' of config map 'argocd-cmd-params-cm'>                                         Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_OTLP_INSECURE:                       <set to the key 'otlp.insecure' of config map 'argocd-cmd-params-cm'>                                        Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_OTLP_HEADERS:                        <set to the key 'otlp.headers' of config map 'argocd-cmd-params-cm'>                                         Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_OTLP_ATTRS:                          <set to the key 'otlp.attrs' of config map 'argocd-cmd-params-cm'>                                           Optional: true
+      ARGOCD_APPLICATION_NAMESPACES:                                     <set to the key 'application.namespaces' of config map 'argocd-cmd-params-cm'>                               Optional: true
+      ARGOCD_CONTROLLER_SHARDING_ALGORITHM:                              <set to the key 'controller.sharding.algorithm' of config map 'argocd-cmd-params-cm'>                        Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_KUBECTL_PARALLELISM_LIMIT:           <set to the key 'controller.kubectl.parallelism.limit' of config map 'argocd-cmd-params-cm'>                 Optional: true
+      ARGOCD_K8SCLIENT_RETRY_MAX:                                        <set to the key 'controller.k8sclient.retry.max' of config map 'argocd-cmd-params-cm'>                       Optional: true
+      ARGOCD_K8SCLIENT_RETRY_BASE_BACKOFF:                               <set to the key 'controller.k8sclient.retry.base.backoff' of config map 'argocd-cmd-params-cm'>              Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_SERVER_SIDE_DIFF:                    <set to the key 'controller.diff.server.side' of config map 'argocd-cmd-params-cm'>                          Optional: true
+      ARGOCD_IGNORE_NORMALIZER_JQ_TIMEOUT:                               <set to the key 'controller.ignore.normalizer.jq.timeout' of config map 'argocd-cmd-params-cm'>              Optional: true
+      ARGOCD_HYDRATOR_ENABLED:                                           <set to the key 'hydrator.enabled' of config map 'argocd-cmd-params-cm'>                                     Optional: true
+      ARGOCD_CLUSTER_CACHE_BATCH_EVENTS_PROCESSING:                      <set to the key 'controller.cluster.cache.batch.events.processing' of config map 'argocd-cmd-params-cm'>     Optional: true
+      ARGOCD_CLUSTER_CACHE_EVENTS_PROCESSING_INTERVAL:                   <set to the key 'controller.cluster.cache.events.processing.interval' of config map 'argocd-cmd-params-cm'>  Optional: true
+      ARGOCD_APPLICATION_CONTROLLER_COMMIT_SERVER:                       <set to the key 'commit.server' of config map 'argocd-cmd-params-cm'>                                        Optional: true
+      KUBECACHEDIR:                                                      /tmp/kubecache
+    Mounts:
+      /app/config/controller/tls from argocd-repo-server-tls (rw)
+      /home/argocd from argocd-home (rw)
+      /home/argocd/params from argocd-cmd-params-cm (rw)
+      /tmp from argocd-application-controller-tmp (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-dhtqk (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False
+Volumes:
+  argocd-home:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  argocd-application-controller-tmp:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  argocd-repo-server-tls:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  argocd-repo-server-tls
+    Optional:    true
+  argocd-cmd-params-cm:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      argocd-cmd-params-cm
+    Optional:  true
+  kube-api-access-dhtqk:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              kubernetes.io/os=linux
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age    From               Message
+  ----     ------            ----   ----               -------
+  Warning  FailedScheduling  9m3s   default-scheduler  0/1 nodes are available: 1 Too many pods. preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+  Warning  FailedScheduling  3m49s  default-scheduler  0/1 nodes are available: 1 Too many pods. preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability (main)
+$ cd terraform
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$ terraform apply
+data.aws_availability_zones.available: Reading...
+aws_iam_role.eks_cluster: Refreshing state... [id=eks-gitops-observability-cluster-role]
+aws_iam_role.node_group: Refreshing state... [id=eks-gitops-observability-node-group-role]
+aws_eip.nat: Refreshing state... [id=eipalloc-01ee4138226896088]
+aws_vpc.main: Refreshing state... [id=vpc-04b57ccea6501dfea]
+data.aws_availability_zones.available: Read complete after 0s [id=ap-south-1]
+aws_internet_gateway.main: Refreshing state... [id=igw-00faceaa888eeba0c]
+aws_subnet.public[1]: Refreshing state... [id=subnet-02de7f98d93e304b5]
+aws_subnet.private[1]: Refreshing state... [id=subnet-06d5726902d7ef9e7]
+aws_subnet.public[0]: Refreshing state... [id=subnet-0011abaf40f3cb2d0]
+aws_subnet.private[0]: Refreshing state... [id=subnet-07810ce39cbc2cd1c]
+aws_route_table.public: Refreshing state... [id=rtb-02460379d57106f68]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-07fa6e9e2b0307dc2]
+aws_nat_gateway.main: Refreshing state... [id=nat-0c7aed2ef8ae46054]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0281adfad4ec24abf]
+aws_route_table.private: Refreshing state... [id=rtb-02bd289a39ecf4497]
+aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0e9aec0d893ce71df]
+aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-079ba9df0c3396b03]
+aws_iam_role_policy_attachment.eks_cluster_policy: Refreshing state... [id=eks-gitops-observability-cluster-role-20260405090913221300000004]
+aws_iam_role_policy_attachment.node_worker_policy: Refreshing state... [id=eks-gitops-observability-node-group-role-20260405090912964200000002]
+aws_iam_role_policy_attachment.node_ecr_readonly: Refreshing state... [id=eks-gitops-observability-node-group-role-20260405090913026900000003]
+aws_iam_role_policy_attachment.node_cni_policy: Refreshing state... [id=eks-gitops-observability-node-group-role-20260405090912958500000001]
+aws_eks_cluster.main: Refreshing state... [id=eks-gitops-observability]
+aws_eks_node_group.main: Refreshing state... [id=eks-gitops-observability:eks-gitops-observability-nodes]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_eks_node_group.main will be updated in-place
+  ~ resource "aws_eks_node_group" "main" {
+        id                     = "eks-gitops-observability:eks-gitops-observability-nodes"
+        tags                   = {
+            "Name" = "eks-gitops-observability-node-group"
+        }
+        # (16 unchanged attributes hidden)
+
+      ~ scaling_config {
+          ~ desired_size = 1 -> 2
+          ~ max_size     = 1 -> 2
+          ~ min_size     = 1 -> 2
+        }
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_eks_node_group.main: Modifying... [id=eks-gitops-observability:eks-gitops-observability-nodes]
+aws_eks_node_group.main: Modifications complete after 9s [id=eks-gitops-observability:eks-gitops-observability-nodes]
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+cluster_endpoint = "https://AA9F9A2A73387EBDxxxxxxxxxxxxxx.gr7.ap-south-1.eks.amazonaws.com"
+cluster_name = "eks-gitops-observability"
+cluster_version = "1.30"
+region = "ap-south-1"
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$ kubectl get pods -n argocd
+NAME                                                READY   STATUS              RESTARTS   AGE
+argocd-application-controller-0                     0/1     ContainerCreating   0          11m
+argocd-applicationset-controller-8599b4df7d-tthtf   1/1     Running             0          11m
+argocd-dex-server-676597cd4f-q9pvc                  1/1     Running             0          11m
+argocd-notifications-controller-56d6c6cd54-2tjk6    1/1     Running             0          11m
+argocd-redis-75bb57d76f-dvgv2                       1/1     Running             0          11m
+argocd-repo-server-84c9cbdbf4-97kvh                 1/1     Running             0          11m
+argocd-server-864ff5bc4d-z6rsk                      1/1     Running             0          11m
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$ kubectl get pods -n argocd -w
+NAME                                                READY   STATUS              RESTARTS   AGE
+argocd-application-controller-0                     0/1     ContainerCreating   0          11m
+argocd-applicationset-controller-8599b4df7d-tthtf   1/1     Running             0          11m
+argocd-dex-server-676597cd4f-q9pvc                  1/1     Running             0          11m
+argocd-notifications-controller-56d6c6cd54-2tjk6    1/1     Running             0          11m
+argocd-redis-75bb57d76f-dvgv2                       1/1     Running             0          11m
+argocd-repo-server-84c9cbdbf4-97kvh                 1/1     Running             0          11m
+argocd-server-864ff5bc4d-z6rsk                      1/1     Running             0          11m
+argocd-application-controller-0                     0/1     Running             0          11m
+argocd-application-controller-0                     1/1     Running             0          12m
+
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$ ^C
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$ kubectl get pods -n argocd
+NAME                                                READY   STATUS    RESTARTS   AGE
+argocd-application-controller-0                     1/1     Running   0          12m
+argocd-applicationset-controller-8599b4df7d-tthtf   1/1     Running   0          12m
+argocd-dex-server-676597cd4f-q9pvc                  1/1     Running   0          12m
+argocd-notifications-controller-56d6c6cd54-2tjk6    1/1     Running   0          12m
+argocd-redis-75bb57d76f-dvgv2                       1/1     Running   0          12m
+argocd-repo-server-84c9cbdbf4-97kvh                 1/1     Running   0          12m
+argocd-server-864ff5bc4d-z6rsk                      1/1     Running   0          12m
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$ kubectl get svc -n argocd
+NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+argocd-applicationset-controller   ClusterIP   172.20.42.60     <none>        7000/TCP            12m
+argocd-dex-server                  ClusterIP   172.20.110.159   <none>        5556/TCP,5557/TCP   12m
+argocd-redis                       ClusterIP   172.20.109.92    <none>        6379/TCP            12m
+argocd-repo-server                 ClusterIP   172.20.185.191   <none>        8081/TCP            12m
+argocd-server                      ClusterIP   172.20.39.18     <none>        80/TCP,443/TCP      12m
+
+Administrator@WIN-778K2I0HA7K MINGW64 ~/Desktop/agentic-etc/aws-eks-gitops-observability/terraform (main)
+$

@@ -1,0 +1,124 @@
+$ helm install demo-app helm-charts/app/ \
+  --namespace apps \
+  --dry-run \
+  --debug
+level=WARN msg="--dry-run is deprecated and should be replaced with '--dry-run=client'"
+level=DEBUG msg="Original chart version" version=""
+level=DEBUG msg="Chart path" path=C:\Users\Administrator\Desktop\agentic-etc\aws-eks-gitops-observability\helm-charts\app
+level=DEBUG msg="number of dependencies in the chart" chart=demo-app dependencies=0
+NAME: demo-app
+LAST DEPLOYED: Sat Apr  4 15:09:36 2026
+NAMESPACE: apps
+STATUS: pending-install
+REVISION: 1
+DESCRIPTION: Dry run complete
+TEST SUITE: None
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+ReadinessProbe:
+  httpGet:
+    path: /health
+    port: 3000
+  periodSeconds: 10
+  timeoutSeconds: 5
+autoscalling:
+  enabled: true
+  maxReplicas: 2
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 70
+image:
+  pullPolicy: IfNotPresent
+  repository: 59379305xxxx.dkr.ecr.ap-south-1.amazonaws.com/eks-demo-app
+  tag: 1.0.0
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+replicaCount: 1
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+service:
+  port: 80
+  targetPort: 3000
+  type: ClusterIP
+
+HOOKS:
+MANIFEST:
+---
+# Source: demo-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app
+  namespace: apps
+  labels:
+    app: demo-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      selector:
+        app: demo-app
+---
+# Source: demo-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: apps
+  labels:
+    app: demo-app
+    version: 1.0.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+        version: 1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: app-service-account
+      containers:
+        - name: demo-app
+          image: "593793055xxx.dkr.ecr.ap-south-1.amazonaws.com/eks-demo-app:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP_VERSION
+              value: "1.0.0"
+            - name: PORT
+              value: "3000"
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            null
+
