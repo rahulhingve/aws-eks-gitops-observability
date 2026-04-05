@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: 593793055492.dkr.ecr.ap-south-1.amazonaws.com/eks-demo-app
+  repository: 5937930xxxx.dkr.ecr.ap-south-1.amazonaws.com/eks-demo-app
   pullPolicy: IfNotPresent
   tag: "1.0.0"
 
