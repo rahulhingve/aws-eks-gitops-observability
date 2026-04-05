@@ -341,11 +341,11 @@ docs/logs/
 
 Important logs include:
 
-- `terraform-apply.log`
-- `helm-install-dryrun.log`
-- `curl.logs`
-- `argo-cd-debug-and-success.log`
-- `hpa-debug.log`
+- `terraform-apply.txt`
+- `helm-install-dryrun.txt`
+- `curl.txt`
+- `argo-cd-debug-and-success.txt`
+- `hpa-debug.txt`
 
 ---
 
