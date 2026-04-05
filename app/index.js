@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     res.json({
-        message: "hello from aws eks demo app",
+        message: "hello from aws eks demo app v2",
         version: process.env.APP_VERSION || "1.0.0",
         hostname: os.hostname(),
 
